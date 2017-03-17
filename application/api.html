@@ -51,7 +51,7 @@
 		var req = createRequest();
 
 		// set up request parameters - uses GET method
-		req.open('GET', 'functions/getValue.php?varname=' + urlencode(varname) + '&code=' + Math.random(), false);
+		req.open('GET', '../functions/getValue.php?varname=' + urlencode(varname) + '&code=' + Math.random(), false);
 
 		// submit to the server for processing
 		req.send(null);
@@ -78,13 +78,13 @@
 		var req = createRequest();
 
 		// set up request parameters - uses combined GET and POST
-		req.open('POST', 'setValue.php?varname=' + urlencode(varname) + '&code=' + Math.random(), false);
+		req.open('POST', '../functions/setValue.php?varname=' + urlencode(varname) + '&code=' + Math.random(), true);
 
 		// send header information along with the POST data
 		var params = 'varvalue=' + urlencode(varvalue);
 		req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-		req.setRequestHeader("Content-length", params.length);
-		req.setRequestHeader("Connection", "close");
+		//req.setRequestHeader("Content-length", params.length);
+		//req.setRequestHeader("Connection", "close");
 
 		// submit to the server for processing
 		req.send(params);
