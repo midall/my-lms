@@ -3,28 +3,52 @@
 // database login information
 require '../config.php';
 
-// read GET variable
-if( ! isset( $_GET ['sco_key'] ) )
+$sco_key = $_REQUEST ['sco_key'];
+$course_number = $_REQUEST ['course_number'];
+
+// determine value to be returned
+switch( $sco_key )
 {
-	return '';
-	exit();
+	
+	// no variable name supplied
+	case '' :
+		$sco_value = '';
+		break;
+	
+	// cmi.core._children is always the same
+	case 'cmi.core._children' :
+		$sco_value = 'student_id,student_name,lesson_location,credit,lesson_status,entry,score,total_time,exit,session_time';
+		break;
+	
+	// cmi.core.student_name is a read-only element
+	// Note: in a real application, read from the main LMS student database
+	case 'cmi.core.student_name' :
+		$varvalue = $iuser_fname . ' ' . $user_lname;
+		break;
+	
+	// cmi.core.student_id is a read-only element
+	// Note: in a real application, read from the main LMS student database
+	case "cmi.core.student_id" :
+		$varvalue = $user_id;
+		break;
+	
+	// all other variable names
+	default :
+		
+		// make safe for database
+		$sco_key = mysqli_escape_string( $dblink, $sco_key );
+		$sco_value = '';
+		
+		// read data from the 'scormvars' table
+		$stmt = $dblink->prepare( 'SELECT sco_value FROM scorm_data WHERE course_number = ? AND sco_key = ?' );
+		$stmt->bind_param( 'sS', $course_number, $sco_key );
+		$stmt->execute();
+		$result = $stmt->get_result();
+		
+		list ( $sco_value ) = mysqli_fetch_row( $result );
 }
 
-$sco_key= $_REQUEST ['sco_key'];
-
-// make safe for database
-$sco_key = mysqli_escape_string( $dblink, $sco_key );
-$sco_value = '';
-
-// read data from the 'scormvars' table
-$stmt = $dblink->prepare( 'SELECT sco_value FROM scorm_data WHERE sco_key = ?' );
-$stmt->bind_param( 's', $sco_key );
-$stmt->execute();
-$result = $stmt->get_result();
-
-list ( $sco_value ) = mysqli_fetch_row( $result );
-
 // return value to the calling program
-print $sco_value;
+echo $sco_value;
 
 ?>

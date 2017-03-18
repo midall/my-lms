@@ -1,3 +1,13 @@
+<?php
+
+if( ! isset( $_GET['course_number'] ) )
+{
+	header( 'Location: ../' );
+}
+
+$course_number = $_GET['course_number'];
+
+?>
 <html>
 <head>
 
@@ -7,7 +17,7 @@
 
 </head>
 <frameset frameborder="0" framespacing="0" border="0" rows="0,*" cols="*">
-	<frame src="api.php?sco_number=1" name="API" noresize>
-	<frame src="../courses/captivate/index.html" name="course">
+	<frame src="api.php?course_number=<?php echo $course_number; ?>" name="API" noresize>
+	<frame src="../courses/<?php echo $course_number; ?>/index_lms.html" name="course">
 </frameset>
 </html>

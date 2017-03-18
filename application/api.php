@@ -1,10 +1,10 @@
 <?php
-if( ! isset( $_GET ['sco_number'] ) )
+if( ! isset( $_GET ['course_number'] ) )
 {
 	return;
 	exit();
 }
-$sco_number = $_GET ['sco_number'];
+$course_number = $_GET ['course_number'];
 
 ?>
 <html>
@@ -18,13 +18,34 @@ $sco_number = $_GET ['sco_number'];
 	// ------------------------------------------
 	//   SCORM RTE Functions - Initialization
 	// ------------------------------------------
-	function LMSInitialize( dummyString )
-	{
-		if (debug)
+	function LMSInitialize( dummyString ) { 
+
+		// create request object 
+		var req = createRequest();
+	
+		// code to prevent caching
+		var d = new Date();
+	
+		// set up request parameters - uses GET method
+		url = "../functions/initialize.php?course_number=<?php echo $course_number; ?>&code=" + d.getTime();
+		req.open( "GET", url, false );    
+	
+		// submit to the server for processing
+		req.send(null);
+	
+		// process returned data - error condition
+		if( req.status != 200 && req.status !=0 )
 		{
-			console.log("*** LMSInitialize ***");
+			alert( "Problem with Request" );
+			return "";
 		}
-		return "true";
+	
+		// process returned data - OK
+		else
+		{
+			return "true";
+		}
+	
 	}
 
 	// ------------------------------------------
@@ -37,16 +58,17 @@ $sco_number = $_GET ['sco_number'];
 		var req = createRequest();
 
 		// set up request parameters - uses GET method
-		url = "../functions/get_value.php?sco_number=<?php echo $sco_number; ?>&sco_key=" + urlencode(sco_key) + "&code=" + Math.random();
+		url = "../functions/get_value.php?course_number=<?php echo $course_number; ?>&sco_key=" + urlencode(sco_key) + "&code=" + Math.random();
 		req.open("GET", url, true);
 
 		// submit to the server for processing
 		req.send(null);
 
 		// process returned data - error condition
-		if (req.status != 200)
+		if( req.status != 200 && req.status != 0 )
 		{
-			console.log("Problem with Request");
+			console.log( url );
+			console.log( req.status + "Problem with Request" );
 			return "";
 		}
 
@@ -65,7 +87,7 @@ $sco_number = $_GET ['sco_number'];
 		var req = createRequest();
 
 		// set up request parameters - uses combined GET and POST
-		url = "../functions/set_value.php?sco_number=<?php echo $sco_number; ?>&sco_key=" + urlencode(sco_key) + "&code=" + Math.random();
+		url = "../functions/set_value.php?course_number=<?php echo $course_number; ?>&sco_key=" + urlencode(sco_key) + "&code=" + Math.random();
 		req.open("POST", url, true);
 
 		// send header information along with the POST data
@@ -76,7 +98,7 @@ $sco_number = $_GET ['sco_number'];
 		req.send(params);
 
 		// process returned data - error condition
-		if (req.status != 200)
+		if( req.status != 200 && req.status != 0 )
 		{
 			console.log("Problem with Request");
 			return "false";
@@ -90,24 +112,18 @@ $sco_number = $_GET ['sco_number'];
 
 	}
 
-	function LMSCommit( dummyString )
+	function LMSCommit(dummyString)
 	{
-		if (debug)
-		{
-			console.log("*** LMSCommit ***");
-		}
+		LMSGetValue("");
 		return "true";
 	}
-
+	
 	// ------------------------------------------
 	//   SCORM RTE Functions - Closing The Session
 	// ------------------------------------------
-	function LMSFinish( dummyString )
+	function LMSFinish(dummyString)
 	{
-		if (debug)
-		{
-			console.log("*** LMSFinish ***");
-		}
+		LMSGetValue("");
 		return "true";
 	}
 
