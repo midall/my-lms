@@ -1,32 +1,18 @@
+<?php
+if( ! isset( $_GET ['sco_number'] ) )
+{
+	return;
+	exit();
+}
+$sco_number = $_GET ['sco_number'];
+
+?>
 <html>
 <head>
 
 <title>VS SCORM - RTE API</title>
 
 <script language="javascript">
-	/*
-
-	 VS SCORM - RTE API FOR SCORM 1.2 
-	 Rev 1.0 - Sunday, May 31, 2009
-	 Copyright (C) 2009, Addison Robson LLC
-
-	 This program is free software; you can redistribute it and/or
-	 modify it under the terms of the GNU General Public License
-	 as published by the Free Software Foundation; either version 2
-	 of the License, or (at your option) any later version.
-
-	 This program is distributed in the hope that it will be useful,
-	 but WITHOUT ANY WARRANTY; without even the implied warranty of
-	 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-	 GNU General Public License for more details.
-
-	 You should have received a copy of the GNU General Public License
-	 along with this program; if not, write to the Free Software
-	 Foundation, Inc., 51 Franklin Street, Fifth Floor, 
-	 Boston, MA  02110-1301, USA.
-
-	 */
-
 	var debug = true;
 
 	// ------------------------------------------
@@ -36,7 +22,7 @@
 	{
 		if (debug)
 		{
-			alert('*** LMSInitialize ***');
+			console.log("*** LMSInitialize ***");
 		}
 		return "true";
 	}
@@ -44,14 +30,15 @@
 	// ------------------------------------------
 	//   SCORM RTE Functions - Getting and Setting Values
 	// ------------------------------------------
-	function LMSGetValue( varname )
+	function LMSGetValue( sco_key )
 	{
 
 		// create request object
 		var req = createRequest();
 
 		// set up request parameters - uses GET method
-		req.open('GET', '../functions/getValue.php?varname=' + urlencode(varname) + '&code=' + Math.random(), false);
+		url = "../functions/get_value.php?sco_number=<?php echo $sco_number; ?>&sco_key=" + urlencode(sco_key) + "&code=" + Math.random();
+		req.open("GET", url, true);
 
 		// submit to the server for processing
 		req.send(null);
@@ -59,7 +46,7 @@
 		// process returned data - error condition
 		if (req.status != 200)
 		{
-			alert('Problem with Request');
+			console.log("Problem with Request");
 			return "";
 		}
 
@@ -71,20 +58,19 @@
 
 	}
 
-	function LMSSetValue( varname, varvalue )
+	function LMSSetValue( sco_key, sco_value )
 	{
 
 		// create request object
 		var req = createRequest();
 
 		// set up request parameters - uses combined GET and POST
-		req.open('POST', '../functions/setValue.php?varname=' + urlencode(varname) + '&code=' + Math.random(), true);
+		url = "../functions/set_value.php?sco_number=<?php echo $sco_number; ?>&sco_key=" + urlencode(sco_key) + "&code=" + Math.random();
+		req.open("POST", url, true);
 
 		// send header information along with the POST data
-		var params = 'varvalue=' + urlencode(varvalue);
+		var params = "sco_value=" + urlencode(sco_value);
 		req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-		//req.setRequestHeader("Content-length", params.length);
-		//req.setRequestHeader("Connection", "close");
 
 		// submit to the server for processing
 		req.send(params);
@@ -92,7 +78,7 @@
 		// process returned data - error condition
 		if (req.status != 200)
 		{
-			alert('Problem with Request');
+			console.log("Problem with Request");
 			return "false";
 		}
 
@@ -108,7 +94,7 @@
 	{
 		if (debug)
 		{
-			alert('*** LMSCommit ***');
+			console.log("*** LMSCommit ***");
 		}
 		return "true";
 	}
@@ -120,7 +106,7 @@
 	{
 		if (debug)
 		{
-			alert('*** LMSFinish ***');
+			console.log("*** LMSFinish ***");
 		}
 		return "true";
 	}
@@ -132,7 +118,7 @@
 	{
 		if (debug)
 		{
-			alert('*** LMSGetLastError ***');
+			console.log("*** LMSGetLastError ***");
 		}
 		return 0;
 	}
@@ -141,7 +127,7 @@
 	{
 		if (debug)
 		{
-			alert('*** LMSGetDiagnostic errorCode=' + errorCode + ' ***');
+			console.log("*** LMSGetDiagnostic errorCode=" + errorCode + " ***");
 		}
 		return "diagnostic string";
 	}
@@ -150,7 +136,7 @@
 	{
 		if (debug)
 		{
-			alert('*** LMSGetErrorString errorCode=' + errorCode + ' ***');
+			console.log("*** LMSGetErrorString errorCode=" + errorCode + " ***");
 		}
 		return "error string";
 	}
@@ -195,7 +181,7 @@
 				// even that didn't work (sigh)
 				catch (failed)
 				{
-					alert("Error creating XMLHttpRequest");
+					console.log("Error creating XMLHttpRequest");
 				}
 
 			}
@@ -215,8 +201,8 @@
 		//
 
 		var histogram =
-		{}, unicodeStr = '', hexEscStr = '';
-		var ret = (str + '').toString();
+		{}, unicodeStr = "", hexEscStr = "";
+		var ret = (str + "").toString();
 
 		var replacer = function( search, replace, str )
 		{
@@ -227,52 +213,52 @@
 		};
 
 		// The histogram is identical to the one in urldecode.
-		histogram["'"] = '%27';
-		histogram['('] = '%28';
-		histogram[')'] = '%29';
-		histogram['*'] = '%2A';
-		histogram['~'] = '%7E';
-		histogram['!'] = '%21';
-		histogram['%20'] = '+';
-		histogram['\u00DC'] = '%DC';
-		histogram['\u00FC'] = '%FC';
-		histogram['\u00C4'] = '%D4';
-		histogram['\u00E4'] = '%E4';
-		histogram['\u00D6'] = '%D6';
-		histogram['\u00F6'] = '%F6';
-		histogram['\u00DF'] = '%DF';
-		histogram['\u20AC'] = '%80';
-		histogram['\u0081'] = '%81';
-		histogram['\u201A'] = '%82';
-		histogram['\u0192'] = '%83';
-		histogram['\u201E'] = '%84';
-		histogram['\u2026'] = '%85';
-		histogram['\u2020'] = '%86';
-		histogram['\u2021'] = '%87';
-		histogram['\u02C6'] = '%88';
-		histogram['\u2030'] = '%89';
-		histogram['\u0160'] = '%8A';
-		histogram['\u2039'] = '%8B';
-		histogram['\u0152'] = '%8C';
-		histogram['\u008D'] = '%8D';
-		histogram['\u017D'] = '%8E';
-		histogram['\u008F'] = '%8F';
-		histogram['\u0090'] = '%90';
-		histogram['\u2018'] = '%91';
-		histogram['\u2019'] = '%92';
-		histogram['\u201C'] = '%93';
-		histogram['\u201D'] = '%94';
-		histogram['\u2022'] = '%95';
-		histogram['\u2013'] = '%96';
-		histogram['\u2014'] = '%97';
-		histogram['\u02DC'] = '%98';
-		histogram['\u2122'] = '%99';
-		histogram['\u0161'] = '%9A';
-		histogram['\u203A'] = '%9B';
-		histogram['\u0153'] = '%9C';
-		histogram['\u009D'] = '%9D';
-		histogram['\u017E'] = '%9E';
-		histogram['\u0178'] = '%9F';
+		histogram["'"] = "%27";
+		histogram["("] = "%28";
+		histogram[")"] = "%29";
+		histogram["*"] = "%2A";
+		histogram["~"] = "%7E";
+		histogram["!"] = "%21";
+		histogram["%20"] = "+";
+		histogram["\u00DC"] = "%DC";
+		histogram["\u00FC"] = "%FC";
+		histogram["\u00C4"] = "%D4";
+		histogram["\u00E4"] = "%E4";
+		histogram["\u00D6"] = "%D6";
+		histogram["\u00F6"] = "%F6";
+		histogram["\u00DF"] = "%DF";
+		histogram["\u20AC"] = "%80";
+		histogram["\u0081"] = "%81";
+		histogram["\u201A"] = "%82";
+		histogram["\u0192"] = "%83";
+		histogram["\u201E"] = "%84";
+		histogram["\u2026"] = "%85";
+		histogram["\u2020"] = "%86";
+		histogram["\u2021"] = "%87";
+		histogram["\u02C6"] = "%88";
+		histogram["\u2030"] = "%89";
+		histogram["\u0160"] = "%8A";
+		histogram["\u2039"] = "%8B";
+		histogram["\u0152"] = "%8C";
+		histogram["\u008D"] = "%8D";
+		histogram["\u017D"] = "%8E";
+		histogram["\u008F"] = "%8F";
+		histogram["\u0090"] = "%90";
+		histogram["\u2018"] = "%91";
+		histogram["\u2019"] = "%92";
+		histogram["\u201C"] = "%93";
+		histogram["\u201D"] = "%94";
+		histogram["\u2022"] = "%95";
+		histogram["\u2013"] = "%96";
+		histogram["\u2014"] = "%97";
+		histogram["\u02DC"] = "%98";
+		histogram["\u2122"] = "%99";
+		histogram["\u0161"] = "%9A";
+		histogram["\u203A"] = "%9B";
+		histogram["\u0153"] = "%9C";
+		histogram["\u009D"] = "%9D";
+		histogram["\u017E"] = "%9E";
+		histogram["\u0178"] = "%9F";
 
 		// Begin with encodeURIComponent, which most resembles PHP's encoding functions
 		ret = encodeURIComponent(ret);

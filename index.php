@@ -1,3 +1,3 @@
 <?php 
-header( 'Location: application/rte.html' );
+header( 'Location: application/rte.php' );
 ?>
