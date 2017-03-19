@@ -39,7 +39,7 @@ switch( $sco_key )
 		$sco_key = mysqli_escape_string( $dblink, $sco_key );
 		$sco_value = '';
 		
-		// read data from the 'scormvars' table
+		// read data from the 'scorm_data' table
 		$stmt = $dblink->prepare( 'SELECT sco_value FROM scorm_data WHERE course_number = ? AND sco_key = ?' );
 		$stmt->bind_param( 'sS', $course_number, $sco_key );
 		$stmt->execute();

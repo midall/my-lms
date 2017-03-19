@@ -103,7 +103,6 @@ $course_number = $_GET ['course_number'];
 			console.log("Problem with Request");
 			return "false";
 		}
-
 		// process returned data - OK
 		else
 		{
@@ -123,8 +122,31 @@ $course_number = $_GET ['course_number'];
 	// ------------------------------------------
 	function LMSFinish(dummyString)
 	{
-		LMSGetValue("");
-		return "true";
+		//LMSGetValue("");
+		
+		// create request object 
+		var req = createRequest();
+
+		// code to prevent caching
+		var d = new Date();
+
+		// set up request parameters - uses GET method
+		url = "../functions/finish.php?course_number=<?php echo $course_number; ?>&code=" + d.getTime();
+		req.open( "GET", url, true );    
+
+		// submit to the server for processing
+		req.send(null);
+
+		// process returned data - error condition
+		if (req.status != 200) {
+			alert("Problem with Request");
+			return "";
+		}
+		// process returned data - OK
+		else {
+			return "true";
+		}
+
 	}
 
 	// ------------------------------------------

@@ -13,9 +13,9 @@ $sco_key = mysqli_escape_string( $dblink, $sco_key );
 $sco_value = mysqli_escape_string( $dblink, $sco_value );
 $course_number = mysqli_escape_string( $dblink, $course_number );
 
-// save data to the 'scormvars' table
+// save data to the 'scorm_data' table
 $stmt = $dblink->prepare( 'DELETE FROM scorm_data WHERE course_number = ? AND sco_key = ?' );
-$stmt->bind_param( 'ss', $course_number, $sco_key );
+$stmt->bind_param( 'is', $course_number, $sco_key );
 $stmt->execute();
 
 $stmt = $dblink->prepare( 'INSERT INTO scorm_data ( course_number, sco_key, sco_value ) VALUES ( ?, ?, ? )' );
