@@ -23,13 +23,18 @@ switch( $sco_key )
 	// cmi.core.student_name is a read-only element
 	// Note: in a real application, read from the main LMS student database
 	case 'cmi.core.student_name' :
-		$varvalue = $iuser_fname . ' ' . $user_lname;
+		$sco_value = $iuser_fname . ' ' . $user_lname;
 		break;
 	
 	// cmi.core.student_id is a read-only element
 	// Note: in a real application, read from the main LMS student database
 	case "cmi.core.student_id" :
-		$varvalue = $user_id;
+		$sco_value = $user_id;
+		break;
+	
+	// cmi.core.score._children is always the same
+	case "cmi.core.score._children" :
+		$sco_value = "raw";
 		break;
 	
 	// all other variable names
@@ -40,8 +45,8 @@ switch( $sco_key )
 		$sco_value = '';
 		
 		// read data from the 'scorm_data' table
-		$stmt = $dblink->prepare( 'SELECT sco_value FROM scorm_data WHERE course_number = ? AND sco_key = ?' );
-		$stmt->bind_param( 'sS', $course_number, $sco_key );
+		$stmt = $dblink->prepare( 'SELECT sco_value FROM scorm_data WHERE course_number = ? AND user_id = ? AND sco_key = ?' );
+		$stmt->bind_param( 'iis', $course_number, $user_id, $sco_key );
 		$stmt->execute();
 		$result = $stmt->get_result();
 		

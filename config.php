@@ -1,4 +1,6 @@
 <?php
+
+// Database credentials
 $dbname = 'my-lms';
 $dbhost = 'localhost';
 $dbuser = 'root';

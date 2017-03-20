@@ -118,11 +118,11 @@ $course_number = $_GET ['course_number'];
 	}
 	
 	// ------------------------------------------
-	//   SCORM RTE Functions - Closing The Session
+	//   SCORM RTE Functions - Closing The Session (typically close window/frame)
 	// ------------------------------------------
 	function LMSFinish(dummyString)
 	{
-		//LMSGetValue("");
+		LMSGetValue("");
 		
 		// create request object 
 		var req = createRequest();
