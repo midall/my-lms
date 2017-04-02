@@ -2,42 +2,60 @@
 
 // database login information
 require '../config.php';
+require 'dbfunctions.php';
 
 $course_number = $_REQUEST ['course_number'];
 $course_number = mysqli_escape_string( $dblink, $course_number );
 
-// Variables names
-$total_time_var = 'cmi.core.total_time';
-$session_time_var = 'cmi.core.session_time';
-
-$time_zero = '0000:00:00';
-
 // if not set, cmi.core.total_time should be set to '0000:00:00'
-$stmt = $dblink->prepare( 'SELECT sco_value FROM scorm_data WHERE course_number = ? AND user_id = ? AND sco_key = ?' );
-$stmt->bind_param( 'iis', $course_number, $user_id, $total_time_var );
-$stmt->execute();
-$result = $stmt->get_result();
+$result = get_scorm_data( $course_number, $user_id, VAR_TOTAL_TIME );
 list ( $totalTime ) = mysqli_fetch_row( $result );
 
 if( ! $totalTime )
 {
-	$stmt = $dblink->prepare( 'DELETE FROM scorm_data WHERE course_number = ? AND user_id = ? AND sco_key = ?' );
-	$stmt->bind_param( 'iis', $course_number, $user_id, $total_time_var );
-	$stmt->execute();
+    delete_scorm_data( $course_number, $user_id, VAR_TOTAL_TIME );
 	
-	$stmt = $dblink->prepare( 'INSERT INTO scorm_data ( course_number, user_id, sco_key, sco_value ) VALUES ( ?, ?, ?, ? )' );
-	$stmt->bind_param( 'iiss', $course_number, $user_id, $total_time_var, $time_zero );
-	$stmt->execute();
+    insert_default_scorm_data( $course_number, $user_id, VAR_TOTAL_TIME, DEFAULT_TOTAL_TIME );
 }
 
 // clear any pre-existing cmi.core.session_time and set to '0000:00:00'
-$stmt = $dblink->prepare( 'DELETE FROM scorm_data WHERE course_number = ? AND user_id = ? AND sco_key = ?' );
-$stmt->bind_param( 'iis', $course_number, $user_id, $session_time_var );
-$stmt->execute();
+delete_scorm_data( $course_number, $user_id, VAR_SESSION_TIME );
 
-$stmt = $dblink->prepare( 'INSERT INTO scorm_data ( course_number, user_id, sco_key, sco_value ) VALUES ( ?, ?, ?, ? )' );
-$stmt->bind_param( 'iiss', $course_number, $user_id, $session_time_var, $time_zero );
-$stmt->execute();
+insert_default_scorm_data( $course_number, $user_id, VAR_CREDIT, DEFAULT_SESSION_TIME );
+
+// if not set, cmi.core.credit  should be set to 'credit'
+$result = get_scorm_data( $course_number, $user_id, VAR_CREDIT );
+var_dump($result);
+list ( $credit ) = mysqli_fetch_row( $result );
+
+if( ! $credit )
+{
+    delete_scorm_data( $course_number, $user_id, VAR_CREDIT );
+	
+    insert_default_scorm_data( $course_number, $user_id, VAR_CREDIT, DEFAULT_CREDIT );
+}
+
+// if not set, cmi.core.lesson_status   should be set to 'not attempted'
+$result = get_scorm_data( $course_number, $user_id, VAR_LESSON_STATUS );
+list ( $lesson_status ) = mysqli_fetch_row( $result );
+
+if( ! $lesson_status  )
+{
+    delete_scorm_data( $course_number, $user_id, VAR_LESSON_STATUS );
+	
+    insert_default_scorm_data( $course_number, $user_id, VAR_LESSON_STATUS, DEFAULT_LESSON_STATUS );
+}
+
+// if not set, cmi.core.entry   should be set to 'ab initio'
+$result = get_scorm_data( $course_number, $user_id, VAR_ENTRY );
+list ( $entry ) = mysqli_fetch_row( $result );
+
+if( ! $entry  )
+{
+	delete_scorm_data( $course_number, $user_id, VAR_ENTRY );
+    
+	insert_default_scorm_data( $course_number, $user_id, VAR_ENTRY, DEFAULT_ENTRY );
+}
 
 // return value to the calling program
 print 'true';

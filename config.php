@@ -1,5 +1,8 @@
 <?php
 
+// Load the constants
+require 'constants.php';
+
 // Database credentials
 $dbname = 'my-lms';
 $dbhost = 'localhost';
@@ -11,7 +14,7 @@ $dblink = mysqli_connect( $dbhost, $dbuser, $dbpass, $dbname );
 
 /**
  * DUMMY USER DATA (STUDENT)
- * MIST REPLACE THESE WITH PROPER DB DATA
+ * MUST REPLACE THESE WITH PROPER DB DATA
  */
 
 $user_id = 125;

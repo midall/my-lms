@@ -1,6 +1,3 @@
-<?php 
-//header( 'Location: application/rte.php' );
-?>
 <html>
 <head>
 <title>my-lms</title>
