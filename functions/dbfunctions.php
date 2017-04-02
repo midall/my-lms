@@ -10,6 +10,8 @@
  */
 function get_scorm_data( $course_number, $user_id, $sco_key  )
 {
+    global $dblink;
+    
     $stmt = $dblink->prepare( 'SELECT sco_value FROM scorm_data WHERE course_number = ? AND user_id = ? AND sco_key = ?' );
     $stmt->bind_param( 'iis', $course_number, $user_id, $sco_key );
     $stmt->execute();
@@ -20,6 +22,8 @@ function get_scorm_data( $course_number, $user_id, $sco_key  )
 
 function delete_scorm_data( $course_number, $user_id, $sco_key )
 {
+    global $dblink;
+    
     $stmt = $dblink->prepare( 'DELETE FROM scorm_data WHERE course_number = ? AND user_id = ? AND sco_key = ?' );
 	$stmt->bind_param( 'iis', $course_number, $user_id, $sco_key );
 	$stmt->execute();
@@ -27,6 +31,8 @@ function delete_scorm_data( $course_number, $user_id, $sco_key )
 
 function insert_default_scorm_data( $course_number, $user_id, $sco_key, $sco_value )
 {
+    global $dblink;
+    
     $stmt = $dblink->prepare( 'INSERT INTO scorm_data ( course_number, user_id, sco_key, sco_value ) VALUES ( ?, ?, ?, ? )' );
 	$stmt->bind_param( 'iiss', $course_number, $user_id, $sco_key, $sco_value );
 	$stmt->execute();
