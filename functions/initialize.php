@@ -25,7 +25,6 @@ insert_default_scorm_data( $course_number, $user_id, VAR_CREDIT, DEFAULT_SESSION
 
 // if not set, cmi.core.credit  should be set to 'credit'
 $result = get_scorm_data( $course_number, $user_id, VAR_CREDIT );
-var_dump($result);
 list ( $credit ) = mysqli_fetch_row( $result );
 
 if( ! $credit )
