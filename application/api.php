@@ -131,7 +131,7 @@ $course_number = $_GET ['course_number'];
 		var d = new Date();
 
 		// set up request parameters - uses GET method
-		url = "../functions/finish.php?course_number=<?php echo $course_number; ?>&code=" + d.getTime();
+		url = "../functions/finilize.php?course_number=<?php echo $course_number; ?>&code=" + d.getTime();
 		req.open( "GET", url, true );    
 
 		// submit to the server for processing

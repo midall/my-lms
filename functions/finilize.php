@@ -1,37 +1,27 @@
 <?php
 
-// database login information
+// database login information && functions
 require '../config.php';
+require 'dbfunctions.php';
 
-$course_number = $_REQUEST ['course_number'];
-$course_number = mysqli_escape_string( $dblink, $course_number );
-
-// Variables names
-$total_time_var = 'cmi.core.total_time';
-$session_time_var = 'cmi.core.session_time';
+$course_number = escape_characters( $_REQUEST [ 'course_number' ] );
 
 // process the changes to cmi.core.total_time
 
 // read cmi.core.total_time from the 'scorm_data' table
-$stmt = $dblink->prepare( 'SELECT sco_value FROM scorm_data WHERE course_number = ? AND user_id = ? AND sco_key = ?' );
-$stmt->bind_param( 'iis', $course_number, $user_id, $total_time_var );
-$stmt->execute();
-$result = $stmt->get_result();
-list ( $totalTime ) = mysqli_fetch_row( $result );
+$result = get_scorm_data( $course_number, $user_id, VAR_TOTAL_TIME );
+list ( $total_time ) = mysqli_fetch_row( $result );
 
 // convert total time to seconds
-$time = explode( ':', $totalTime );
+$time = explode( ':', $total_time );
 $totalSeconds = $time [0] * 60 * 60 + $time [1] * 60 + $time [2];
 
 // read the last set cmi.core.session_time from the 'scorm_data' table
-$stmt = $dblink->prepare( 'SELECT sco_value FROM scorm_data WHERE course_number = ? AND user_id = ? AND sco_key = ?' );
-$stmt->bind_param( 'iis', $course_number, $user_id, $session_time_var );
-$stmt->execute();
-$result = $stmt->get_result();
-list ( $sessionTime ) = mysqli_fetch_row( $result );
+$result = get_scorm_data( $course_number, $user_id, VAR_SESSION_TIME );
+list ( $session_time ) = mysqli_fetch_row( $result );
 
 // convert session time to seconds
-$time = explode( ':', $sessionTime );
+$time = explode( ':', $session_time );
 $sessionSeconds = $time [0] * 60 * 60 + $time [1] * 60 + $time [2];
 
 // new total time is ...
@@ -44,21 +34,15 @@ $totalMinutes = intval( $totalSeconds / 60 );
 $totalSeconds -= $totalMinutes * 60;
 
 // reformat to comply with the SCORM data model
-$totalTime = sprintf( "%04d:%02d:%02d", $totalHours, $totalMinutes, $totalSeconds );
+$total_time = sprintf( "%04d:%02d:%02d", $totalHours, $totalMinutes, $totalSeconds );
 
 // save new total time to the 'scorm_data' table
-$stmt = $dblink->prepare( 'DELETE FROM scorm_data WHERE course_number = ? AND user_id = ? AND sco_key = ?' );
-$stmt->bind_param( 'iis', $course_number, $user_id, $total_time_var );
-$stmt->execute();
+delete_scorm_data( $course_number, $user_id, VAR_TOTAL_TIME );
 
-$stmt = $dblink->prepare( 'INSERT INTO scorm_data ( course_number, user_id, sco_key, sco_value ) VALUES ( ?, ?, ?, ? )' );
-$stmt->bind_param( 'iiss', $course_number, $user_id, $total_time_var, $totalTime );
-$stmt->execute();
+insert_default_scorm_data( $course_number, $user_id, VAR_TOTAL_TIME, $total_time );
 
 // delete the last session time
-$stmt = $dblink->prepare( 'DELETE FROM scorm_data WHERE course_number = ? AND user_id = ? AND sco_key = ?' );
-$stmt->bind_param( 'iis', $course_number, $user_id, $session_time_var );
-$stmt->execute();
+delete_scorm_data( $course_number, $user_id, VAR_SESSION_TIME );
 
 // return value to the calling program
 print "true";

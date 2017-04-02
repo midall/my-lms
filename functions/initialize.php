@@ -4,14 +4,13 @@
 require '../config.php';
 require 'dbfunctions.php';
 
-$course_number = $_REQUEST [ 'course_number' ];
-$course_number = mysqli_escape_string( $dblink, $course_number );
+$course_number = escape_characters( $_REQUEST [ 'course_number' ] );
 
 // if not set, cmi.core.total_time should be set to '0000:00:00'
 $result = get_scorm_data( $course_number, $user_id, VAR_TOTAL_TIME );
-list ( $totalTime ) = mysqli_fetch_row( $result );
+list ( $total_time ) = mysqli_fetch_row( $result );
 
-if( !$totalTime )
+if( !$total_time )
 {
 	delete_scorm_data( $course_number, $user_id, VAR_TOTAL_TIME );
 	insert_default_scorm_data( $course_number, $user_id, VAR_TOTAL_TIME, DEFAULT_TOTAL_TIME );

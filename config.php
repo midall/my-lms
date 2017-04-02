@@ -3,16 +3,12 @@
 // Load the constants
 require 'constants.php';
 
-// Database credentials
-$dbname = 'my-lms';
-$dbhost = 'localhost';
-$dbuser = 'root';
-$dbpass = '';
+// connect to DB
+require 'db_conn.php';
 
-// connect to the database
-$dblink = mysqli_connect( $dbhost, $dbuser, $dbpass, $dbname );
 
 /**
+ * @TODO
  * DUMMY USER DATA (STUDENT)
  * MUST REPLACE THESE WITH PROPER DB DATA
  */
