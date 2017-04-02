@@ -1,6 +1,6 @@
 <?php
 
-// database login information
+// database login information && functions
 require '../config.php';
 require 'dbfunctions.php';
 
