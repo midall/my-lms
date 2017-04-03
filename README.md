@@ -21,3 +21,6 @@ The languages that used are:
 - Apache 2.4.23
 - PHP 5.6.25
 - MySQL 5.7.14
+
+# Full documentation
+- Documentation template from: https://github.com/surjithctly/documentation-html-template
