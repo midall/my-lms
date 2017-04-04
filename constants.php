@@ -1,5 +1,10 @@
 <?php
 
+// General Details
+define( 'SITE_NAME',	'My-LMS' );
+define( 'VERSION',		'1.0-beta' );
+define( 'AUTHOR',		'Michael Nt' );
+
 // Database credentials
 define( 'DBNAME', 	'my-lms' );
 define( 'DBHOST', 	'localhost' );

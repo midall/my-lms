@@ -1,4 +1,4 @@
-# My LMS project
+# My-LMS project
 
 # Description
 This repository is my first attempt to create, step-by-step, a basic LMS framework. My primary guidance is from http://www.vsscorm.net/
