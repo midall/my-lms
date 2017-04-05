@@ -1,3 +1,6 @@
+<?php
+require 'constants.php';
+?>
 <html>
 <head>
 <title><?php echo SITE_NAME; ?></title>
@@ -8,6 +11,6 @@
 	<p><a href="application/rte.php?course_number=1">Captive</a></p>
 	<p><a href="application/rte.php?course_number=2">LMS365</a></p>
 	<br/>
-	<p>Or go to the <a href="documentation">documentation</a></p>
+	<p>Or go to the <a href="documentation" target="_blank">documentation</a></p>
 </body>
 </html>

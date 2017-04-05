@@ -94,7 +94,7 @@ require '../constants.php';
 												<ul>
 													<li><strong>Item Name : </strong><?php echo SITE_NAME; ?></li>
 													<li><strong>Item Version : </strong> v <?php echo VERSION; ?></li>
-													<li><strong>Author  : </strong> <a href="https://ntalla.eu/" target="_blank"><?php echo AUTHOR; ?></a></li>
+													<li><strong>Author  : </strong> <a href="https://ntallas.eu/" target="_blank"><?php echo AUTHOR; ?></a></li>
 													<li><strong>GitHub repository: </strong> <a href="https://github.com/midall/my-lms" target="_blank">My LMS project</a></li>
 												</ul>
 											</div>
