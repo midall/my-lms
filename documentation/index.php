@@ -75,7 +75,12 @@ require '../constants.php';
 							<ul class="nav">
 								<li><a href="#line1">About the project</a></li>
 								<li><a href="#line2">How to Install</a></li>
-								<li><a href="#line3">SCORM</a></li>
+								<li><a href="#line3">SCORM</a>
+									<ul class="nav">
+										<li><a href="#line3_1">SCORM &amp; LMS</a></li>
+										<li><a href="#line3_2">SCO API methods</a></li>
+									</ul>
+								</li>
 								<li><a href="#line4">Application</a></li>
 								<li><a href="#line5">Contact Me</a></li>
 							</ul>
@@ -132,27 +137,6 @@ require '../constants.php';
 							</div>
 						</section>
 
-						<section class="section">
-
-							<div class="row">
-								<div class="col-md-12 left-align">
-									<h2 class="dark-text">How to Install <a href="#top">#back to top</a><hr></h2>
-								</div>
-								<!-- end col -->
-							</div>
-							<!-- end row -->
-
-							<div class="row">
-								<div class="col-md-12">
-								
-								</div>
-								<!-- end col -->
-							</div>
-							<!-- end row -->
-
-						</section>
-						<!-- end section -->
-
 						<section id="line2" class="section">
 
 							<div class="row">
@@ -185,7 +169,80 @@ require '../constants.php';
 
 							<div class="row">
 								<div class="col-md-12">
+									<h4 id="line3_1">SCORM &amp; LMS</h4>
+									<p>SCORM stands for Sharable Content Object Reference Model and its main purpose is to set the 
+										standards and specifications (with one word  compliance ) of interoperability of the content 
+										used for electronic educational purpose.</p>
+									<p>There most used SCORM versions (from oldest to newest):</p>
+									<ol>
+										<li>SRORM 1.1</li>
+										<li>SRORM 1.2</li>
+										<li>SCORM 2004 (3rd and 4th edition)</li>
+									</ol>
+									<p>The SCORM 2004 4th edition is the latest and it is released on March 2009</p>
+									<br />
+									<img src="images/upload/flow.png" alt="" class="img-responsive img-thumbnail">
 									
+									<h4>LMS</h4>
+									<p>Learning Management System is the software  that allows to create, manage and track training 
+										programs, mostly web-based using guidelines (SCORM).</p>
+									<br />
+									
+									<h4>RTE</h4>
+									<p>The Run Time Environment is the mechanism that defines how the SCO will interact with the LMS</p>
+									<br />
+									
+									<h4>CAM</h4>
+									<p>SCORM Content Aggregation Model (CAM)  describes the guidelines of how to combine learning content 
+										labeled as SCOs in a standardized way for reusability and interoperability.</p>
+									<br />
+									
+									<h4>Useful Links</h4>
+									<p>You can find useful SCORM material:</p>
+									<ol>
+										<li>https://www.adlnet.gov/</li>
+										<li>http://www.vsscorm.net/</li>
+									</ol>
+									<br />
+									
+									<h4>A simple representation of how a LMS is running:</h4>
+									<img src="images/upload/LMS.png" alt="" class="img-responsive img-thumbnail">
+									
+									<p>The RTE contains the API (JavaScript standar function – see below) and the SCO (one or many) in one 
+										or separate frames. The LMS is interacting with RTE via API functions and manage the input/output 
+										data through preset variable (data model).</p>
+									<br />
+									
+									<h4 id="line3_2">SCO API methods</h4>
+									<p>This 8 functions must be provided from the API in order for the training course to communicate with the LMS.</p>
+									
+									<div class="col-md-6">
+										<strong>SCORM 1.2</strong>
+										<ul>
+											<li>API.LMSInitialize("")</li>
+											<li>API.LMSFinish("")</li>
+											<li>API.LMSGetValue(parameter)</li>
+											<li>API.LMSSetValue(parameter, value)</li>
+											<li>API.LMSCommit("")</li>
+											<li>API.LMSGetLastError()</li>
+											<li>API.LMSGetErrorString(errorCode)</li>
+											<li>API.LMSGetDiagnostic(errorCode)</li>
+										</ul>
+									</div>
+
+									<div class="col-md-6">
+										<strong>SCORM 2004</strong>
+										<ul>
+											<li>API.Initialize("")</li>
+											<li>API.Terminate("")</li>
+											<li>API.GetValue(parameter)</li>
+											<li>API.SetValue(parameter, value)</li>
+											<li>API.Commit("")</li>
+											<li>API.GetLastError()</li>
+											<li>API.GetErrorString(errorCode)</li>
+											<li>API.GetDiagnostic(errorCode)</li>
+										</ul>
+									</div>
 								</div>
 							</div>
 
@@ -204,7 +261,8 @@ require '../constants.php';
 
 							<div class="row">
 								<div class="col-md-12">
-									
+									<h4>MySQL security</h4>
+									<p>All mysqli queries are protected from SQL injection by preparing SQL statements for execution</p>
 								</div>
 								<!-- end col -->
 							</div>
