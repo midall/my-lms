@@ -3,7 +3,7 @@ require 'constants.php';
 ?>
 <html>
 <head>
-<title><?php echo SITE_NAME; ?></title>
+<title><?php echo SITE_NAME; ?> - Home</title>
 </head>
 <body bgcolor="#ffffff">
 	<p>Welcome to <?php echo SITE_NAME; ?>.</p>

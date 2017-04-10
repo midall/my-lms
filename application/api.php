@@ -10,7 +10,7 @@ $course_number = $_GET ['course_number'];
 <html>
 <head>
 
-<title>VS SCORM - RTE API</title>
+<title><?php echo SITE_NAME; ?> - RTE API</title>
 
 <script language="javascript">
 	var debug = true;

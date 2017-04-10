@@ -11,7 +11,7 @@ $course_number = $_GET['course_number'];
 <html>
 <head>
 
-<title>VS SCORM - RTE Frameset</title>
+<title><?php echo SITE_NAME; ?> - RTE Frameset</title>
 
 <script src="../assets/jquery/jquery-3.2.0.min.js"></script>
 

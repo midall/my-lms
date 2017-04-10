@@ -79,10 +79,12 @@ require '../constants.php';
 									<ul class="nav">
 										<li><a href="#line3_1">SCORM &amp; LMS</a></li>
 										<li><a href="#line3_2">SCO API methods</a></li>
+										<li><a href="#line3_3">SCO API variables</a></li>
 									</ul>
 								</li>
 								<li><a href="#line4">Application</a></li>
-								<li><a href="#line5">Contact Me</a></li>
+								<li><a href="#line5">References</a></li>
+								<li><a href="#line6">Contact Me</a></li>
 							</ul>
 						</nav >
 					</div>
@@ -197,14 +199,6 @@ require '../constants.php';
 										labeled as SCOs in a standardized way for reusability and interoperability.</p>
 									<br />
 									
-									<h4>Useful Links</h4>
-									<p>You can find useful SCORM material:</p>
-									<ol>
-										<li>https://www.adlnet.gov/</li>
-										<li>http://www.vsscorm.net/</li>
-									</ol>
-									<br />
-									
 									<h4>A simple representation of how a LMS is running:</h4>
 									<img src="images/upload/LMS.png" alt="" class="img-responsive img-thumbnail">
 									
@@ -243,6 +237,50 @@ require '../constants.php';
 											<li>API.GetDiagnostic(errorCode)</li>
 										</ul>
 									</div>
+									
+									<br />
+									<h4 id="line3_3">SCO API variables</h4>
+									<p>There are a lot of variables/parameters used in SCORM, below are the required.</p>
+									
+									<div class="col-md-6">
+										<strong>Variable</strong>
+										<ul>
+											<li>cmi.core._children</li>
+											<li>cmi.core.student_id</li>
+											<li>cmi.core.student_name</li>
+											<li>cmi.core.lesson_location</li>
+											<li>cmi.core.credit</li>
+											<li>cmi.core.lesson_status</li>
+											<li>cmi.core.entry</li>
+											<li>cmi.core.score._children</li>
+											<li>cmi.core.score.raw</li>
+											<li>cmi.core.total_time</li>
+											<li>cmi.core.session_time</li>
+											<li>cmi.core.exit</li>
+											<li>cmi.suspend_data</li>
+											<li>cmi.launch_data</li>
+										</ul>
+									</div>
+
+									<div class="col-md-6">
+										<strong></strong>
+										<ul>
+											<li></li>
+											<li></li>
+											<li></li>
+											<li></li>
+											<li></li>
+											<li></li>
+											<li></li>
+											<li></li>
+											<li></li>
+											<li></li>
+											<li></li>
+											<li></li>
+											<li></li>
+											<li></li>
+										</ul>
+									</div>
 								</div>
 							</div>
 
@@ -261,8 +299,26 @@ require '../constants.php';
 
 							<div class="row">
 								<div class="col-md-12">
+									<p>This application build and tested on SCORM version 1.2, so the references in this documentation is about thatt version. 
+										Methods, variables and mechanism of SCORM 2004 also found in this documentation, but is for general purpose and further development.</p>
+									
 									<h4>MySQL security</h4>
 									<p>All mysqli queries are protected from SQL injection by preparing SQL statements for execution</p>
+									
+									<h4>Launch Application</h4>
+									<p>The basic file to launch the application is "rte.php", which inside are loading two files in "frames"</p>
+									
+									<p>First is loading the API functions written in JS, file "api.php" which includes all the functions from the section <a href="#line3_2">SCO API methods</a>
+									<div class="intro2 clearfix">
+										<p><i class="fa fa-exclamation-triangle"></i> Be careful with the order that the RTE loads the API file and the launching scorm page eg. index_lms.html. 
+											API file must load in a frame <strong>before</strong> the launching html page of SCORM package. Otherwise will get an error like this (or similar):
+											<br>Error - unable to acquire LMS API, content may not play properly and results may not be recorded.
+										</p>
+									</div>
+									
+									<h4>api.php</h4>
+									<p>The API file includes the 8 functions (described in section <a href="#line3_2">SCO API methods</a>).
+										For permanent storage of values of SCORM variables (described in section <a href="#line3_3">SCO API variables</a>)</p>
 								</div>
 								<!-- end col -->
 							</div>
@@ -272,6 +328,32 @@ require '../constants.php';
 						<!-- end section -->
 						
 						<section id="line5" class="section">
+
+							<div class="row">
+								<div class="col-md-12 left-align">
+									<h2 class="dark-text">References <a href="#top">#back to top</a><hr></h2>
+								</div>
+								<!-- end col -->
+							</div>
+							<!-- end row -->
+
+							<div class="row">
+								<div class="col-md-12">
+									<h4>Useful Links and Reference</h4>
+									<p>Find below useful links and SCORM material that used for this development:</p>
+									<ol>
+										<li>https://www.adlnet.gov/</li>
+										<li>http://www.vsscorm.net/</li>
+										<li>http://scorm.com/</li>
+									</ol>
+								</div>
+							</div>
+							<!-- end row -->
+
+						</section>
+						<!-- end section -->
+						
+						<section id="line6" class="section">
 
 							<div class="row">
 								<div class="col-md-12 left-align">
