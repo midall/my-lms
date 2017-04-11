@@ -240,9 +240,9 @@ require '../constants.php';
 									
 									<br />
 									<h4 id="line3_3">SCO API variables</h4>
-									<p>There are a lot of variables/parameters used in SCORM, below are the required.</p>
+									<p>There are a lot of variables/parameters used in SCORM, below are the <sgtrong>required</strong> ones</p>
 									
-									<div class="col-md-6">
+									<div class="col-md-3">
 										<strong>Variable</strong>
 										<ul>
 											<li>cmi.core._children</li>
@@ -262,23 +262,43 @@ require '../constants.php';
 										</ul>
 									</div>
 
-									<div class="col-md-6">
-										<strong></strong>
+									<div class="col-md-2">
+										<strong>GET/SET</strong>
 										<ul>
-											<li></li>
-											<li></li>
-											<li></li>
-											<li></li>
-											<li></li>
-											<li></li>
-											<li></li>
-											<li></li>
-											<li></li>
-											<li></li>
-											<li></li>
-											<li></li>
-											<li></li>
-											<li></li>
+											<li>GET</li>
+											<li>GET</li>
+											<li>GET</li>
+											<li>GET/SET</li>
+											<li>GET</li>
+											<li>GET/SET</li>
+											<li>GET</li>
+											<li>GET</li>
+											<li>GET/SET</li>
+											<li>GET</li>
+											<li>SET</li>
+											<li>SET</li>
+											<li>GET/SET</li>
+											<li>GET</li>
+										</ul>
+									</div>
+
+									<div class="col-md-7">
+										<strong>Example</strong>
+										<ul>
+											<li>student_id, lesson_location</li>
+											<li>125</li>
+											<li>John Wick</li>
+											<li>1, 2, 9</li>
+											<li>credit, no-credit</li>
+											<li>passed, completed, failed, incomplete, browsed, not attempted</li>
+											<li>ab-initio, resume</li>
+											<li>raw</li>
+											<li>0, 100</li>
+											<li>0000:00:00.00</li>
+											<li>0000:00:00.00</li>
+											<li>time-out, suspend, logout</li>
+											<li>2w2a605070408A02Xds2402</li>
+											<li>B01BA000A</li>
 										</ul>
 									</div>
 								</div>
