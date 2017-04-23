@@ -151,7 +151,14 @@ require '../constants.php';
 							
 							<div class="row">
 								<div class="col-md-12">
-									
+									<ol>
+										<li>Download the package</li>
+										<li>Copy-paste them into your web directory (local or remote)</li>
+										<li>Run the SQL commands from "database/stracture.sql" in your database server</li>
+										<li>Change the credentials/details on file "constants.php"</li>
+										<li>Upload your SCORM course on folder "courses"</li>
+										<li>Update, if required, link in page "application/rte.php"</li>
+									</ol>
 								</div>
 
 							</div>
