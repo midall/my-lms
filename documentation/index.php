@@ -84,7 +84,8 @@ require '../constants.php';
 								</li>
 								<li><a href="#line4">Application</a></li>
 								<li><a href="#line5">References</a></li>
-								<li><a href="#line6">Contact Me</a></li>
+								<li><a href="#line6">Version History (Changelog)</a></li>
+								<li><a href="#line7">Contact Me</a></li>
 							</ul>
 						</nav >
 					</div>
@@ -206,8 +207,8 @@ require '../constants.php';
 										labeled as SCOs in a standardized way for reusability and interoperability.</p>
 									<br />
 									
-									<h4>A simple representation of how a LMS is running:</h4>
-									<img src="images/upload/LMS.png" alt="" class="img-responsive img-thumbnail">
+									<p>A simple representation of how a LMS is running:</p>
+									<img src="images/upload/LMS.png" alt="" class="img-responsive img-thumbnail aligncenter" >
 									
 									<p>The RTE contains the API (JavaScript standar function – see below) and the SCO (one or many) in one 
 										or separate frames. The LMS is interacting with RTE via API functions and manage the input/output 
@@ -230,7 +231,9 @@ require '../constants.php';
 											<li>API.LMSGetDiagnostic(errorCode)</li>
 										</ul>
 									</div>
-
+									
+									<br />
+									
 									<div class="col-md-6">
 										<strong>SCORM 2004</strong>
 										<ul>
@@ -369,9 +372,9 @@ require '../constants.php';
 									<h4>Useful Links and Reference</h4>
 									<p>Find below useful links and SCORM material that used for this development:</p>
 									<ol>
-										<li>https://www.adlnet.gov/</li>
-										<li>http://www.vsscorm.net/</li>
-										<li>http://scorm.com/</li>
+										<li><a href="https://www.adlnet.gov/" target="_blank">adlnet.gov</a></li>
+										<li><a href="http://www.vsscorm.net/" target="_blank">vsscorm.net</a></li>
+										<li><a href="http://scorm.com/" target="_blank">scorm.com</a></li>
 									</ol>
 								</div>
 							</div>
@@ -384,6 +387,42 @@ require '../constants.php';
 
 							<div class="row">
 								<div class="col-md-12 left-align">
+									<h2 class="dark-text">Version History (Changelog) <a href="#top">#back to top</a><hr></h2>
+								</div>
+								<!-- end col -->
+							</div>
+							<!-- end row -->
+
+							<div class="row">
+								<div class="col-md-12">
+
+									<p>You can find the version history on file <strong>changelog.md</strong> .</p>
+
+									<hr>
+
+									<h4>Changelog</h4>
+
+									<pre class="brush: html">
+										<?php
+										$handle = fopen( '../changelog.md', 'r');
+										while( ( $line = fgets( $handle ) ) !== false )
+										{
+											echo $line;
+										}
+										fclose($handle);
+										?>
+									</pre>
+								</div>
+							</div>
+							<!-- end row -->
+
+						</section>
+						<!-- end section -->
+						
+						<section id="line7" class="section">
+
+							<div class="row">
+								<div class="col-md-12 left-align">
 									<h2 class="dark-text">Contact Me <a href="#top">#back to top</a><hr></h2>
 								</div>
 								<!-- end col -->
@@ -392,6 +431,7 @@ require '../constants.php';
 
 							<div class="row">
 								<div class="col-md-12">
+									<p> Please feel free to visit <a href="https://ntallas.eu/" target="_blank">ntallas.eu</a> and contact me</a>
 									
 								</div>
 							</div>
