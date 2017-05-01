@@ -6,9 +6,9 @@ require 'dbfunctions.php';
 
 $course_number = escape_characters( $_REQUEST [ 'course_number' ] );
 
-// process the changes to cmi.core.total_time
+// process the changes to VAR_TOTAL_TIME
 
-// read cmi.core.total_time from the 'scorm_data' table
+// read VAR_TOTAL_TIME from the 'scorm_data' table
 $result = get_scorm_data( $course_number, $user_id, VAR_TOTAL_TIME );
 list ( $total_time ) = mysqli_fetch_row( $result );
 
@@ -16,7 +16,7 @@ list ( $total_time ) = mysqli_fetch_row( $result );
 $time = explode( ':', $total_time );
 $totalSeconds = $time [0] * 60 * 60 + $time [1] * 60 + $time [2];
 
-// read the last set cmi.core.session_time from the 'scorm_data' table
+// read the last set VAR_SESSION_TIME from the 'scorm_data' table
 $result = get_scorm_data( $course_number, $user_id, VAR_SESSION_TIME );
 list ( $session_time ) = mysqli_fetch_row( $result );
 
@@ -60,6 +60,45 @@ if( !$exit )
 	else
 	{
 		insert_default_scorm_data( $course_number, $user_id, VAR_ENTRY, '' );
+	}
+}
+
+// Set the VAR_LESSON_STATUS value
+$result = get_scorm_data( $course_number, $user_id, VAR_LESSON_STATUS );
+list ( $lesson_status ) = mysqli_fetch_row( $result );
+
+if( !$lesson_status )
+{
+	// if it's 'not attempted', change it to 'completed'
+	if( $value == 'not attempted' )
+	{
+		update_default_scorm_data( $course_number, $user_id, VAR_LESSON_STATUS, 'completed' );
+	}
+}
+
+// Set the VAR_MASTERYSCORE value (here initialize in initialize.php, normally from imsmanifest.xml)
+$result = get_scorm_data( $course_number, $user_id, VAR_MASTERYSCORE );
+list ( $masteryscore ) = mysqli_fetch_row( $result );
+$masteryscore *= 1;
+
+if( $masteryscore )
+{
+	// yes - so read the score
+	$result = get_scorm_data( $course_number, $user_id, VAR_SCORERAW );
+	list ( $scoreraw ) = mysqli_fetch_row( $result );
+	$scoreraw *= 1;
+	
+	if( $masteryscore )
+	{
+		// set cmi.core.lesson_status to passed/failed
+		if( $scoreraw >= $masteryscore )
+		{
+			update_default_scorm_data( $course_number, $user_id, VAR_LESSON_STATUS, 'passed' );
+		}
+		else
+		{
+			update_default_scorm_data( $course_number, $user_id, VAR_LESSON_STATUS, 'failed' );
+		}
 	}
 }
 

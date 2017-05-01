@@ -18,6 +18,8 @@ define( 'VAR_CREDIT',			'cmi.core.credit' );
 define( 'VAR_LESSON_STATUS',	'cmi.core.lesson_status' );
 define( 'VAR_ENTRY',			'cmi.core.entry' );
 define( 'VAR_EXIT',				'cmi.core.exit' );
+define( 'VAR_MASTERYSCORE',		'adlcp:masteryscore' );
+define( 'VAR_SCORERAW',			'cmi.score.raw' );
 
 // LMS default values
 define( 'DEFAULT_TOTAL_TIME',		'0000:00:00' );
@@ -25,5 +27,7 @@ define( 'DEFAULT_SESSION_TIME',		'0000:00:00' );
 define( 'DEFAULT_CREDIT',			'credit' );
 define( 'DEFAULT_LESSON_STATUS',	'not attempted' );
 define( 'DEFAULT_ENTRY',			'ab initio' );
+define( 'DEFAULT_EXIT',				'' );
+define( 'DEFAULT_MASTERYSCORE',		'90' );
 
 ?>
