@@ -23,4 +23,5 @@ The languages that used are:
 - MySQL 5.7.14
 
 # Full documentation
+- Proper documented
 - Documentation template from: https://github.com/surjithctly/documentation-html-template

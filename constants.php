@@ -17,6 +17,7 @@ define( 'VAR_SESSION_TIME',		'cmi.core.session_time' );
 define( 'VAR_CREDIT',			'cmi.core.credit' );
 define( 'VAR_LESSON_STATUS',	'cmi.core.lesson_status' );
 define( 'VAR_ENTRY',			'cmi.core.entry' );
+define( 'VAR_EXIT',				'cmi.core.exit' );
 
 // LMS default values
 define( 'DEFAULT_TOTAL_TIME',		'0000:00:00' );

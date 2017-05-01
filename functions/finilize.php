@@ -44,6 +44,25 @@ insert_default_scorm_data( $course_number, $user_id, VAR_TOTAL_TIME, $total_time
 // delete the last session time
 delete_scorm_data( $course_number, $user_id, VAR_SESSION_TIME );
 
+// clear any existing cmi.core.entry
+delete_scorm_data( $course_number, $user_id, VAR_ENTRY );
+
+// New VAR_ENTRY value depends on VAR_EXIT
+$result = get_scorm_data( $course_number, $user_id, VAR_EXIT );
+list ( $exit ) = mysqli_fetch_row( $result );
+
+if( !$exit )
+{
+	if ($value == 'suspend')
+	{
+		insert_default_scorm_data( $course_number, $user_id, VAR_ENTRY, 'resume' );
+	}
+	else
+	{
+		insert_default_scorm_data( $course_number, $user_id, VAR_ENTRY, '' );
+	}
+}
+
 // return value to the calling program
 print "true";
 
