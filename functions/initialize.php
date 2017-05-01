@@ -60,6 +60,17 @@ if( ! $masteryscore )
 	insert_default_scorm_data( $course_number, $user_id, VAR_MASTERYSCORE, DEFAULT_MASTERYSCORE );	
 }
 
+// if not set, VAR_LAUNCHDATA should be set to either 
+// a value from the IMS manifest file (adlcp:datafromlms), or an empty string
+$result = get_scorm_data( $course_number, $user_id, VAR_LAUNCHDATA );
+list ( $launchdata ) = mysqli_fetch_row( $result );
+
+if( ! $launchdata )
+{ 
+	delete_scorm_data( $course_number, $user_id, VAR_LAUNCHDATA );
+	insert_default_scorm_data( $course_number, $user_id, VAR_ENTRY, DEFAULT_LAUNCHDATA );
+}
+
 // return value to the calling program
 print 'true';
 ?>
