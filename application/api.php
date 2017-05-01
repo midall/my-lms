@@ -1,10 +1,10 @@
 <?php
-if( ! isset( $_GET ['course_number'] ) )
+if( ! isset( $_GET['course_number'] ) )
 {
 	return;
 	exit();
 }
-$course_number = $_GET ['course_number'];
+$course_number = $_GET['course_number'];
 
 ?>
 <html>
@@ -13,7 +13,7 @@ $course_number = $_GET ['course_number'];
 <title><?php echo SITE_NAME; ?> - RTE API</title>
 
 <script language="javascript">
-	var debug = true;
+	var debug = false;
 
 	// ------------------------------------------
 	//   SCORM RTE Functions - Initialization

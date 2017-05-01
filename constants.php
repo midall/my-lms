@@ -2,7 +2,7 @@
 
 // General Details
 define( 'SITE_NAME',	'My-LMS' );
-define( 'VERSION',		'2.0beta' );
+define( 'VERSION',		'2.0' );
 define( 'AUTHOR',		'Michael Nt' );
 
 // Database credentials
