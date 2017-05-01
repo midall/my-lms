@@ -12,7 +12,7 @@ $course_number = $_GET['course_number'];
 <html>
 <head>
 
-<title><?php echo SITE_NAME; ?> - RTE Frameset</title>
+<title><?php echo SITE_NAME; ?> - RTE Frameset <?php echo VERSION; ?></title>
 
 <script src="../assets/jquery/jquery-3.2.0.min.js"></script>
 

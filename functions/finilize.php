@@ -2,105 +2,60 @@
 
 // database login information && functions
 require '../config.php';
-require 'dbfunctions.php';
+require 'api_functions.php';
 
-$course_number = escape_characters( $_REQUEST [ 'course_number' ] );
+$course_number = trim( $_REQUEST['course_number'] );
 
-// process the changes to VAR_TOTAL_TIME
-
-// read VAR_TOTAL_TIME from the 'scorm_data' table
-$result = get_scorm_data( $course_number, $user_id, VAR_TOTAL_TIME );
-list ( $total_time ) = mysqli_fetch_row( $result );
-
-// convert total time to seconds
-$time = explode( ':', $total_time );
-$totalSeconds = $time [0] * 60 * 60 + $time [1] * 60 + $time [2];
-
-// read the last set VAR_SESSION_TIME from the 'scorm_data' table
-$result = get_scorm_data( $course_number, $user_id, VAR_SESSION_TIME );
-list ( $session_time ) = mysqli_fetch_row( $result );
-
-// convert session time to seconds
-$time = explode( ':', $session_time );
-$sessionSeconds = $time [0] * 60 * 60 + $time [1] * 60 + $time [2];
-
-// new total time is ...
-$totalSeconds += $sessionSeconds;
-
-// break total time into hours, minutes and seconds
-$totalHours = intval( $totalSeconds / 3600 );
-$totalSeconds -= $totalHours * 3600;
-$totalMinutes = intval( $totalSeconds / 60 );
-$totalSeconds -= $totalMinutes * 60;
-
-// reformat to comply with the SCORM data model
-$total_time = sprintf( "%04d:%02d:%02d", $totalHours, $totalMinutes, $totalSeconds );
-
-// save new total time to the 'scorm_data' table
-delete_scorm_data( $course_number, $user_id, VAR_TOTAL_TIME );
-
-insert_default_scorm_data( $course_number, $user_id, VAR_TOTAL_TIME, $total_time );
-
-// delete the last session time
-delete_scorm_data( $course_number, $user_id, VAR_SESSION_TIME );
-
-// clear any existing cmi.core.entry
-delete_scorm_data( $course_number, $user_id, VAR_ENTRY );
-
-// New VAR_ENTRY value depends on VAR_EXIT
-$result = get_scorm_data( $course_number, $user_id, VAR_EXIT );
-list ( $exit ) = mysqli_fetch_row( $result );
-
-if( !$exit )
+// Set the 'lesson_status' value - if it's 'not attempted', change it to 'completed'
+$core_lesson_status = read_element( $course_number, DEFAULT_CORE_STUDENT_ID, CORE_LESSON_STATUS );
+if( $core_lesson_status == 'not attempted' )
 {
-	if ($value == 'suspend')
+	write_element( $course_number, DEFAULT_CORE_STUDENT_ID, CORE_LESSON_STATUS, 'completed' );
+}
+
+// Set the 'masteryscore' value (here initialized by initialize.php, normally from imsmanifest.xml)
+$adlcp_masteryscore = read_element( $course_number, DEFAULT_CORE_STUDENT_ID, ADLCP_MASTERYSCORE );
+$adlcp_masteryscore *= 1;
+
+if( $adlcp_masteryscore )
+{
+	// yes - so read the score
+	$score_raw = read_element( $course_number, DEFAULT_CORE_STUDENT_ID, SCORE_RAW );
+	$score_raw *= 1;
+	
+	// set 'lesson_status' to passed/failed
+	if( $score_raw >= $adlcp_masteryscore )
 	{
-		insert_default_scorm_data( $course_number, $user_id, VAR_ENTRY, 'resume' );
+		write_element( $course_number, DEFAULT_CORE_STUDENT_ID, CORE_LESSON_STATUS, 'passed' );
 	}
 	else
 	{
-		insert_default_scorm_data( $course_number, $user_id, VAR_ENTRY, '' );
+		write_element( $course_number, DEFAULT_CORE_STUDENT_ID, CORE_LESSON_STATUS, 'failed' );
 	}
 }
 
-// Set the VAR_LESSON_STATUS value
-$result = get_scorm_data( $course_number, $user_id, VAR_LESSON_STATUS );
-list ( $lesson_status ) = mysqli_fetch_row( $result );
-
-if( !$lesson_status )
+// New 'entry' value depends on 'exit'
+$core_exit = read_element( $course_number, DEFAULT_CORE_STUDENT_ID, CORE_EXIT );
+if ($value == 'suspend')
 {
-	// if it's 'not attempted', change it to 'completed'
-	if( $value == 'not attempted' )
-	{
-		update_default_scorm_data( $course_number, $user_id, VAR_LESSON_STATUS, 'completed' );
-	}
+	write_element( $course_number, DEFAULT_CORE_STUDENT_ID, CORE_ENTRY, 'resume' );
 }
-
-// Set the VAR_MASTERYSCORE value (here initialize in initialize.php, normally from imsmanifest.xml)
-$result = get_scorm_data( $course_number, $user_id, VAR_MASTERYSCORE );
-list ( $masteryscore ) = mysqli_fetch_row( $result );
-$masteryscore *= 1;
-
-if( $masteryscore )
+else
 {
-	// yes - so read the score
-	$result = get_scorm_data( $course_number, $user_id, VAR_SCORERAW );
-	list ( $scoreraw ) = mysqli_fetch_row( $result );
-	$scoreraw *= 1;
-	
-	if( $masteryscore )
-	{
-		// set cmi.core.lesson_status to passed/failed
-		if( $scoreraw >= $masteryscore )
-		{
-			update_default_scorm_data( $course_number, $user_id, VAR_LESSON_STATUS, 'passed' );
-		}
-		else
-		{
-			update_default_scorm_data( $course_number, $user_id, VAR_LESSON_STATUS, 'failed' );
-		}
-	}
+	write_element( $course_number, DEFAULT_CORE_STUDENT_ID, CORE_ENTRY, '' );
 }
+
+// Get 'total_time', 'session_time' an calculate new 'total_time'
+$total_time = read_element( $course_number, DEFAULT_CORE_STUDENT_ID, CORE_TOTAL_TIME );
+$session_time = read_element( $course_number, DEFAULT_CORE_STUDENT_ID, CORE_SESSION_TIME );
+$new_total_time = calculate_total_time( $total_time, $session_time );
+
+// Save new total time
+write_element( $course_number, DEFAULT_CORE_STUDENT_ID, CORE_TOTAL_TIME, $new_total_time );
+
+// Delete the last session time
+// Session Time
+clear_element( $course_number, DEFAULT_CORE_STUDENT_ID, CORE_SESSION_TIME );
 
 // return value to the calling program
 print "true";

@@ -1,76 +1,36 @@
 <?php
 
-// database login information && functions
+// Config info && API functions
 require '../config.php';
-require 'dbfunctions.php';
+require 'api_functions.php';
 
-$course_number = escape_characters( $_REQUEST [ 'course_number' ] );
+$course_number = escape_characters( $_REQUEST['course_number'] );
 
-// if not set, VAR_TOTAL_TIME should be set to '0000:00:00'
-$result = get_scorm_data( $course_number, $user_id, VAR_TOTAL_TIME );
-list ( $total_time ) = mysqli_fetch_row( $result );
+// Elements that tell the SCO which other elements are supported by this API
+initialize_element( $course_number, DEFAULT_CORE_STUDENT_ID, CORE_CHILDREN, DEFAULT_CORE_CHILDREN );
+initialize_element( $course_number, DEFAULT_CORE_STUDENT_ID, CORE_SCORE_CHILDREN, DEFAULT_CORE_SCORE_CHILDREN );
 
-if( !$total_time )
-{
-	delete_scorm_data( $course_number, $user_id, VAR_TOTAL_TIME );
-	insert_default_scorm_data( $course_number, $user_id, VAR_TOTAL_TIME, DEFAULT_TOTAL_TIME );
-}
+// Student information
+initialize_element( $course_number, DEFAULT_CORE_STUDENT_ID, CORE_STUDENT_NAME, DEFAULT_CORE_STUDENT_NAME );
+initialize_element( $course_number, DEFAULT_CORE_STUDENT_ID, CORE_STUDENT_ID, DEFAULT_CORE_STUDENT_ID );
 
-// clear any pre-existing VAR_SESSION_TIME and set to '0000:00:00'
-delete_scorm_data( $course_number, $user_id, VAR_SESSION_TIME );
-insert_default_scorm_data( $course_number, $user_id, VAR_SESSION_TIME, DEFAULT_SESSION_TIME );
+// Mastery score
+initialize_element( $course_number, DEFAULT_CORE_STUDENT_ID, ADLCP_MASTERYSCORE, DEFAULT_ADLCP_MASTERYSCORE );
 
-// if not set, VAR_CREDIT should be set to 'credit'
-$result = get_scorm_data( $course_number, $user_id, VAR_CREDIT );
-list ( $credit ) = mysqli_fetch_row( $result );
+// Launch data
+initialize_element( $course_number, DEFAULT_CORE_STUDENT_ID, LAUNCH_DATA, DEFAULT_LAUNCH_DATA );
 
-if( !$credit )
-{
-	delete_scorm_data( $course_number, $user_id, VAR_CREDIT );
-	insert_default_scorm_data( $course_number, $user_id, VAR_CREDIT, DEFAULT_CREDIT );
-}
+// Progress
+initialize_element( $course_number, DEFAULT_CORE_STUDENT_ID, CORE_CREDIT, DEFAULT_CORE_CREDIT );
+initialize_element( $course_number, DEFAULT_CORE_STUDENT_ID, CORE_LESSON_STATUS, DEFAULT_CORE_LESSON_STATUS );
+initialize_element( $course_number, DEFAULT_CORE_STUDENT_ID, CORE_ENTRY, DEFAULT_CORE_ENTRY );
 
-// if not set, VAR_LESSON_STATUS should be set to 'not attempted'
-$result = get_scorm_data( $course_number, $user_id, VAR_LESSON_STATUS );
-list ( $lesson_status ) = mysqli_fetch_row( $result );
+// Total Time
+initialize_element( $course_number, DEFAULT_CORE_STUDENT_ID, CORE_TOTAL_TIME, DEFAULT_CORE_TOTAL_TIME );
 
-if( !$lesson_status )
-{
-	delete_scorm_data( $course_number, $user_id, VAR_LESSON_STATUS );
-	insert_default_scorm_data( $course_number, $user_id, VAR_LESSON_STATUS, DEFAULT_LESSON_STATUS );
-}
+// Session Time
+clear_element( $course_number, DEFAULT_CORE_STUDENT_ID, CORE_SESSION_TIME );
 
-// if not set, VAR_ENTRY should be set to 'ab initio'
-$result = get_scorm_data( $course_number, $user_id, VAR_ENTRY );
-list ( $entry ) = mysqli_fetch_row( $result );
-
-if( !$entry )
-{
-	delete_scorm_data( $course_number, $user_id, VAR_ENTRY );
-	insert_default_scorm_data( $course_number, $user_id, VAR_ENTRY, DEFAULT_ENTRY );
-}
-
-// if not set, set it to default (VAR_MASTERYSCORE value should be set from the LMS imsmanifest.xml file)
-$result = get_scorm_data( $course_number, $user_id, VAR_MASTERYSCORE );
-list ( $masteryscore ) = mysqli_fetch_row( $result );
-
-if( ! $masteryscore )
-{ 
-	delete_scorm_data( $course_number, $user_id, VAR_MASTERYSCORE );
-	insert_default_scorm_data( $course_number, $user_id, VAR_MASTERYSCORE, DEFAULT_MASTERYSCORE );	
-}
-
-// if not set, VAR_LAUNCHDATA should be set to either 
-// a value from the IMS manifest file (adlcp:datafromlms), or an empty string
-$result = get_scorm_data( $course_number, $user_id, VAR_LAUNCHDATA );
-list ( $launchdata ) = mysqli_fetch_row( $result );
-
-if( ! $launchdata )
-{ 
-	delete_scorm_data( $course_number, $user_id, VAR_LAUNCHDATA );
-	insert_default_scorm_data( $course_number, $user_id, VAR_ENTRY, DEFAULT_LAUNCHDATA );
-}
-
-// return value to the calling program
+// Return value to the calling program
 print 'true';
 ?>

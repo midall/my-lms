@@ -1,26 +1,20 @@
 <?php
 
-// database login information
+// Config info && API functions
 require '../config.php';
+require 'api_functions.php';
 
-// read GET and POST variables
-$sco_key = $_REQUEST ['sco_key'];
-$sco_value = $_REQUEST ['sco_value'];
-$course_number = $_REQUEST ['course_number'];
+// Read GET and POST variables
+$sco_key = trim( $_REQUEST['sco_key'] );
+$sco_value = trim( $_REQUEST['sco_value'] );
+$course_number = trim( $_REQUEST['course_number'] );
 
-// make safe for database
-$sco_key = mysqli_escape_string( $dblink, $sco_key );
-$sco_value = mysqli_escape_string( $dblink, $sco_value );
-$course_number = mysqli_escape_string( $dblink, $course_number );
-
-// save data to the 'scorm_data' table
-$stmt = $dblink->prepare( 'DELETE FROM scorm_data WHERE course_number = ? AND user_id = ? AND sco_key = ?' );
-$stmt->bind_param( 'iis', $course_number, $user_id, $sco_key );
-$stmt->execute();
-
-$stmt = $dblink->prepare( 'INSERT INTO scorm_data ( course_number, user_id, sco_key, sco_value ) VALUES ( ?, ?, ?, ? )' );
-$stmt->bind_param( 'iiss', $course_number, $user_id, $sco_key, $sco_value );
-$stmt->execute();
+// Check if anything is blank
+if( strlen( $sco_key ) != 0 && strlen( $sco_value ) != 0 && strlen( $course_number ) != 0 )
+{
+	// Clear old data and save data to the 'scorm_data' table
+	write_element( $course_number, DEFAULT_CORE_STUDENT_ID, $sco_key, $sco_value );
+}
 
 // return value to the calling program
 print 'true';
