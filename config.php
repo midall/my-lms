@@ -3,7 +3,11 @@
 // Load the constants
 require 'constants.php';
 
-// connect to DB
-require 'db_conn.php';
+// Load main classes
+require 'classes/Db.php';
+require 'classes/Api.php';
+
+// Create object
+$api = new Api();
 
 ?>

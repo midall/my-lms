@@ -6,8 +6,8 @@ define( 'VERSION',		'2.0' );
 define( 'AUTHOR',		'Michael Nt' );
 
 // Database credentials
-define( 'DBNAME', 	'my-lms' );
 define( 'DBHOST', 	'localhost' );
+define( 'DBNAME', 	'my-lms' );
 define( 'DBUSER', 	'root' );
 define( 'DBPASS', 	'' );
 

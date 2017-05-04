@@ -2,7 +2,7 @@
 
 // Config info && API functions
 require '../config.php';
-require 'api_functions.php';
+//require 'api_functions.php';
 
 $course_number = trim( $_REQUEST['course_number'] );
 $sco_key = trim( $_REQUEST['sco_key'] );
@@ -17,7 +17,7 @@ switch( $sco_key )
 	
 	// all other variable names
 	default :
-		$sco_value = read_element( $course_number, DEFAULT_CORE_STUDENT_ID, $sco_key );
+		$sco_value = $api->read_element( $course_number, DEFAULT_CORE_STUDENT_ID, $sco_key );
 }
 
 // return value to the calling program

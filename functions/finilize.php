@@ -2,7 +2,7 @@
 
 // database login information && functions
 require '../config.php';
-require 'api_functions.php';
+//require 'api_functions.php';
 
 $course_number = trim( $_REQUEST['course_number'] );
 
@@ -10,27 +10,27 @@ $course_number = trim( $_REQUEST['course_number'] );
 $core_lesson_status = read_element( $course_number, DEFAULT_CORE_STUDENT_ID, CORE_LESSON_STATUS );
 if( $core_lesson_status == 'not attempted' )
 {
-	write_element( $course_number, DEFAULT_CORE_STUDENT_ID, CORE_LESSON_STATUS, 'completed' );
+	$api->write_element( $course_number, DEFAULT_CORE_STUDENT_ID, CORE_LESSON_STATUS, 'completed' );
 }
 
 // Set the 'masteryscore' value (here initialized by initialize.php, normally from imsmanifest.xml)
-$adlcp_masteryscore = read_element( $course_number, DEFAULT_CORE_STUDENT_ID, ADLCP_MASTERYSCORE );
+$adlcp_masteryscore = $api->read_element( $course_number, DEFAULT_CORE_STUDENT_ID, ADLCP_MASTERYSCORE );
 $adlcp_masteryscore *= 1;
 
 if( $adlcp_masteryscore )
 {
 	// yes - so read the score
-	$score_raw = read_element( $course_number, DEFAULT_CORE_STUDENT_ID, SCORE_RAW );
+	$score_raw = $api->read_element( $course_number, DEFAULT_CORE_STUDENT_ID, SCORE_RAW );
 	$score_raw *= 1;
 	
 	// set 'lesson_status' to passed/failed
 	if( $score_raw >= $adlcp_masteryscore )
 	{
-		write_element( $course_number, DEFAULT_CORE_STUDENT_ID, CORE_LESSON_STATUS, 'passed' );
+		$api->write_element( $course_number, DEFAULT_CORE_STUDENT_ID, CORE_LESSON_STATUS, 'passed' );
 	}
 	else
 	{
-		write_element( $course_number, DEFAULT_CORE_STUDENT_ID, CORE_LESSON_STATUS, 'failed' );
+		$api->write_element( $course_number, DEFAULT_CORE_STUDENT_ID, CORE_LESSON_STATUS, 'failed' );
 	}
 }
 
@@ -38,24 +38,24 @@ if( $adlcp_masteryscore )
 $core_exit = read_element( $course_number, DEFAULT_CORE_STUDENT_ID, CORE_EXIT );
 if ($value == 'suspend')
 {
-	write_element( $course_number, DEFAULT_CORE_STUDENT_ID, CORE_ENTRY, 'resume' );
+	$api->write_element( $course_number, DEFAULT_CORE_STUDENT_ID, CORE_ENTRY, 'resume' );
 }
 else
 {
-	write_element( $course_number, DEFAULT_CORE_STUDENT_ID, CORE_ENTRY, '' );
+	$api->write_element( $course_number, DEFAULT_CORE_STUDENT_ID, CORE_ENTRY, '' );
 }
 
 // Get 'total_time', 'session_time' an calculate new 'total_time'
-$total_time = read_element( $course_number, DEFAULT_CORE_STUDENT_ID, CORE_TOTAL_TIME );
-$session_time = read_element( $course_number, DEFAULT_CORE_STUDENT_ID, CORE_SESSION_TIME );
-$new_total_time = calculate_total_time( $total_time, $session_time );
+$total_time = $api->read_element( $course_number, DEFAULT_CORE_STUDENT_ID, CORE_TOTAL_TIME );
+$session_time = $api->read_element( $course_number, DEFAULT_CORE_STUDENT_ID, CORE_SESSION_TIME );
+$new_total_time = $api->calculate_total_time( $total_time, $session_time );
 
 // Save new total time
-write_element( $course_number, DEFAULT_CORE_STUDENT_ID, CORE_TOTAL_TIME, $new_total_time );
+$api->write_element( $course_number, DEFAULT_CORE_STUDENT_ID, CORE_TOTAL_TIME, $new_total_time );
 
 // Delete the last session time
 // Session Time
-clear_element( $course_number, DEFAULT_CORE_STUDENT_ID, CORE_SESSION_TIME );
+$api->clear_element( $course_number, DEFAULT_CORE_STUDENT_ID, CORE_SESSION_TIME );
 
 // return value to the calling program
 print "true";
