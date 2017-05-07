@@ -2,14 +2,23 @@
 
 class Api extends Db
 {
-	/*
-	* Class Constructor
-	*
-	* Init API
+	private $course_number;
+	private $user_id;
+	
+	/**
+	 * Class Constructor
+	 * Init API
+	 * 
+	 * @param int $course_number
+	 * @param int $user_id
+	 * 
 	*/
-	public function __construct()
+	public function __construct( $user_id, $course_number )
     {
 		 parent::__construct();
+		 
+		 $this->set_user_id( $user_id );
+		 $this->set_course_number( $course_number );
 	}
 	
 	/**
@@ -21,16 +30,51 @@ class Api extends Db
 	}
 	
 	/**
+	 * Set the course number
+	 */
+	public function set_course_number( $course_number )
+	{
+		 $this->course_number = $course_number;
+	}
+	
+	/**
+	 * Get the course number
+	 * 
+	 * @return int
+	 */
+	public function get_course_number()
+	{
+		 return $this->course_number;
+	}
+	
+	/**
+	 * Set the user id
+	 */
+	public function set_user_id( $user_id )
+	{
+		 $this->user_id = $user_id;
+	}
+	
+	/**
+	 * Get the user id
+	 * 
+	 * @return int
+	 */
+	public function get_user_id()
+	{
+		 return $this->$user_id;
+	}
+	
+	
+	/**
 	* Get the value of a specific data element
 	* 
-	* @param int $course_number
-	* @param int $user_id
 	* @param string $sco_key
 	* @return string
 	*/
-   function read_element( $course_number, $user_id, $sco_key )
+   function read_element( $sco_key )
    {
-	   $value = $this->get_scorm_data( $course_number, $user_id, $sco_key );
+	   $value = $this->get_scorm_data( $this->course_number, $this->user_id, $sco_key );
 
 	   return $value;
    }
@@ -38,16 +82,14 @@ class Api extends Db
    /**
 	* Insert a new value for a data element
 	* 
-	* @param int $course_number
-	* @param int $user_id
 	* @param string $sco_key
 	* @param string $sco_value
 	* @return <empty> string
 	*/
-   function write_element( $course_number, $user_id, $sco_key, $sco_value )
+   function write_element( $sco_key, $sco_value )
    {
-	   $this->delete_scorm_data( $course_number, $user_id, $sco_key );
-	   $this->insert_default_scorm_data( $course_number, $user_id, $sco_key, $sco_value );
+	   $this->delete_scorm_data( $this->course_number, $this->user_id, $sco_key );
+	   $this->insert_default_scorm_data( $this->course_number, $this->user_id, $sco_key, $sco_value );
 
 	   return;
    }
@@ -55,14 +97,12 @@ class Api extends Db
    /**
 	* Clear data for a specific data element
 	* 
-	* @param int $course_number
-	* @param int $user_id
 	* @param string $sco_key
 	* @return <empty> string
 	*/
-   function clear_element( $course_number, $user_id, $sco_key )
+   function clear_element( $sco_key )
    {
-	   $this->delete_scorm_data( $course_number, $user_id, $sco_key );
+	   $this->delete_scorm_data( $this->course_number, $this->user_id, $sco_key );
 
 	   return;
    }
@@ -70,19 +110,17 @@ class Api extends Db
    /**
 	* Initialize the SCORM data elements
 	* 
-	* @param int $course_number
-	* @param int $user_id
 	* @param string $sco_key
 	* @param string $sco_value
 	* @return <empty> string
 	*/
-   function initialize_element( $course_number, $user_id, $sco_key, $sco_value )
+   function initialize_element( $sco_key, $sco_value )
    {
-	   $value = $this->get_scorm_data( $course_number, $user_id, $sco_key );
+	   $value = $this->get_scorm_data( $this->course_number, $this->user_id, $sco_key );
 
 	   if( ! $value )
 	   {
-		   $this->insert_default_scorm_data( $course_number, $user_id, $sco_key, $sco_value );
+		   $this->insert_default_scorm_data( $this->course_number, $this->user_id, $sco_key, $sco_value );
 	   }
 
 	   return;

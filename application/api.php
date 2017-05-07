@@ -1,4 +1,6 @@
 <?php
+require '../constants.php';
+
 if( ! isset( $_GET['course_number'] ) )
 {
 	return;

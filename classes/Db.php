@@ -11,7 +11,6 @@ Class Db
 	private $dbuser;
 	private $dbpass;
 	
-	
 	/*
 	* Class Constructor
 	*

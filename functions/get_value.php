@@ -1,26 +1,25 @@
 <?php
 
-// Config info && API functions
+// Set up constants, database and api objects
 require '../config.php';
-//require 'api_functions.php';
 
-$course_number = trim( $_REQUEST['course_number'] );
+// Read GET and POST variables
 $sco_key = trim( $_REQUEST['sco_key'] );
 
-// determine value to be returned
+// Determine value to be returned
 switch( $sco_key )
 {
-	// no variable name supplied
+	// No variable name supplied
 	case '' :
 		$sco_value = '';
 		break;
 	
-	// all other variable names
+	// All other variable names
 	default :
-		$sco_value = $api->read_element( $course_number, DEFAULT_CORE_STUDENT_ID, $sco_key );
+		$sco_value = $api->read_element( $sco_key );
 }
 
-// return value to the calling program
+// Return value to the calling program
 echo $sco_value;
 
 ?>
