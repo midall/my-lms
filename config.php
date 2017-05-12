@@ -8,7 +8,7 @@ require 'classes/Db.php';
 require 'classes/Api.php';
 
 // Get the course number / Check if anything is blank
-if( isset( $_REQUEST['course_number'] ) || strlen( $_REQUEST['course_number'] ) == 0  )
+if( isset( $_REQUEST['course_number'] ) && strlen( $_REQUEST['course_number'] ) != 0  )
 {
 	$course_number = trim( $_REQUEST['course_number'] );
 }

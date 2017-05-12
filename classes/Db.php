@@ -150,5 +150,37 @@ Class Db
 	   $stmt->bind_param( 'siis', $sco_value, $course_number, $user_id, $sco_key );
 	   $stmt->execute();
    }
+
+   /**
+	* Get scorm data from scorm_data table
+	* 
+	* @param int $course_number
+	* @param int $user_id
+	*/
+   protected function get_course_data( $course_number, $user_id )
+   {
+	    // Escape characters
+	   $course_number = $this->escape_characters( $course_number );
+	   $user_id = $this->escape_characters( $user_id );
+
+	   $stmt = $this->dblink->prepare( 'SELECT * FROM scorm_data WHERE course_number = ? AND user_id = ? ' );
+	   $stmt->bind_param( 'ii', $course_number, $user_id );
+	   $stmt->execute();
+	   $result = $stmt->get_result();
+
+	   // Get the no. of rows
+	   $row_count = mysqli_num_rows( $result );
+
+	   $values = array();
+	   if( $row_count != 0 )
+	   {
+		   while( $row = mysqli_fetch_assoc( $result ) )
+		   {
+			   $values[] = $row;
+		   }
+	   }
+
+	   return $values;
+   }
 }
 ?>

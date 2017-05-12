@@ -2,15 +2,15 @@
 
 class Api extends Db
 {
-	private $course_number;
 	private $user_id;
+	private $course_number;
 	
 	/**
 	 * Class Constructor
 	 * Init API
 	 * 
-	 * @param int $course_number
 	 * @param int $user_id
+	 * @param int $course_number
 	 * 
 	*/
 	public function __construct( $user_id, $course_number )
@@ -30,25 +30,9 @@ class Api extends Db
 	}
 	
 	/**
-	 * Set the course number
-	 */
-	public function set_course_number( $course_number )
-	{
-		 $this->course_number = $course_number;
-	}
-	
-	/**
-	 * Get the course number
-	 * 
-	 * @return int
-	 */
-	public function get_course_number()
-	{
-		 return $this->course_number;
-	}
-	
-	/**
 	 * Set the user id
+	 * 
+	 * @param int $user_id
 	 */
 	public function set_user_id( $user_id )
 	{
@@ -65,6 +49,25 @@ class Api extends Db
 		 return $this->$user_id;
 	}
 	
+	/**
+	 * Set the course number
+	 * 
+	 * @param int $course_number
+	 */
+	public function set_course_number( $course_number )
+	{
+		 $this->course_number = $course_number;
+	}
+	
+	/**
+	 * Get the course number
+	 * 
+	 * @return int
+	 */
+	public function get_course_number()
+	{
+		 return $this->course_number;
+	}
 	
 	/**
 	* Get the value of a specific data element

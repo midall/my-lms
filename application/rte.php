@@ -14,8 +14,6 @@ $course_number = $_GET['course_number'];
 
 <title><?php echo SITE_NAME; ?> - RTE Frameset <?php echo VERSION; ?></title>
 
-<script src="../assets/jquery/jquery-3.2.0.min.js"></script>
-
 </head>
 <frameset frameborder="0" framespacing="0" border="0" rows="0,*" cols="*">
 	<frame src="api.php?course_number=<?php echo $course_number; ?>" name="API" noresize>

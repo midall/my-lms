@@ -130,7 +130,9 @@ require '../constants.php';
 														<br> No support is provided for faulty customization.
 													</p>
 												</div>
-
+												
+												<h4>Enhancements</h4>
+												<p>The application is using XMLHttpRequest for the database interactions and as future enhancement is to convert those calls using jQuery functionality $.ajax, $.post and $.get</p>
 											</div>
 										</div>
 
@@ -333,10 +335,10 @@ require '../constants.php';
 										Methods, variables and mechanism of SCORM 2004 also found in this documentation, but is for general purpose and further development.</p>
 									
 									<h4>MySQL security</h4>
-									<p>All mysqli queries are protected from SQL injection by preparing SQL statements for execution</p>
+									<p>All mysqli queries are protected from SQL injection by preparing SQL statements for execution.</p>
 									
 									<h4>Launch Application</h4>
-									<p>The basic file to launch the application is "rte.php", which inside are loading two files in "frames"</p>
+									<p>The basic file to launch the application is "rte.php", which inside are loading two files in "frames".</p>
 									
 									<p>First is loading the API functions written in JS, file "api.php" which includes all the functions from the section <a href="#line3_2">SCO API methods</a>
 									<div class="intro2 clearfix">
