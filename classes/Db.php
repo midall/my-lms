@@ -182,5 +182,22 @@ Class Db
 
 	   return $values;
    }
+
+   /**
+	* Delete data from table scorm_data
+	* 
+	* @param int $course_number
+	* @param int $user_id
+	*/
+   protected function delete_course_data( $course_number, $user_id )
+   {
+	   // Escape characters
+	   $course_number = $this->escape_characters( $course_number );
+	   $user_id = $this->escape_characters( $user_id );
+
+	   $stmt = $this->dblink->prepare( 'DELETE FROM scorm_data WHERE course_number = ? AND user_id = ?' );
+	   $stmt->bind_param( 'ii', $course_number, $user_id );
+	   $stmt->execute();
+   }
 }
 ?>

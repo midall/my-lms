@@ -16,9 +16,16 @@ else
 {
 	$course_number = '';
 }
-
 // Create object
 $admin = new Admin( DEFAULT_CORE_STUDENT_ID );
+
+//Clear data if checked
+if( isset( $_REQUEST['clear'] ) && $_REQUEST['clear'] == 'on' )
+{
+	$admin->clear_scorm_courses_data( $course_number );
+}
+
+// Get data
 $scorm_data = $admin->get_scorm_courses_data( $course_number );
 ?>
 <html>
@@ -51,14 +58,18 @@ th
 	<p>Go to <a href=".." >home</a></p>
 	<div style="width:600px; margin:0 auto;" bgcolor="#ffffff">
 		<form action="administration.php" method="GET">
+			<h3>Please select action:</h3>
 			<select name="course_number">
 				<option value="">Select Course</option>
 				<option value="1" <?php if( $course_number == 1 ) echo 'selected'; ?>>Captive</option>
 				<option value="2" <?php if( $course_number == 2 ) echo 'selected'; ?>>LMS365</option>
 			</select>
+			<br /><br />
+			Clear Data: <input type="checkbox" name="clear" />
+			<br /><br />
 			<input type="submit" />
 		</form>
-
+		<br /><hr><br />
 		<table>
 			<tr>
 				<th width="8%">SCO ID</th>

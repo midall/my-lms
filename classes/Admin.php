@@ -65,4 +65,20 @@ class Admin extends Db
 		
 		return $values;
 	}
+	
+	/**
+	 * Clear data for a specific user, scorm number
+	 * 
+	 * @param int $scorm_number
+	 */
+	public function clear_scorm_courses_data( $scorm_number )
+	{
+		if( $scorm_number == '' )
+		{
+			return;
+		}
+		
+		$this->delete_course_data( $scorm_number, $this->user_id );
+		return;
+	}
 }
