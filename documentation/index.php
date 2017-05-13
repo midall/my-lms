@@ -126,13 +126,18 @@ require '../constants.php';
 													<li>MySQL 5.7.14</li>
 												</ol>
 												<div class="intro2 clearfix">
-													<p><i class="fa fa-exclamation-triangle"></i> Be careful while editing the software. If not edited properly, the functionality may break completely.
+													<p>
+														<i class="fa fa-exclamation-triangle"></i>
+														Be careful while editing the software. If not edited properly, the functionality may break completely.
 														<br> No support is provided for faulty customization.
 													</p>
 												</div>
 												
 												<h4>Enhancements</h4>
-												<p>The application is using XMLHttpRequest for the database interactions and as future enhancement is to convert those calls using jQuery functionality $.ajax, $.post and $.get</p>
+												<p>The application is using XMLHttpRequest for the database interactions and as future enhancement is to convert 
+													those calls using jQuery functionality $.ajax, $.post and $.get</p>
+												<p>Also a good feature is to add the functionality to parse the manifest file directly from the SCORM package, 
+													rather than use standard values.</p>
 											</div>
 										</div>
 

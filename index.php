@@ -5,8 +5,8 @@ require 'constants.php';
 <head>
 <title><?php echo SITE_NAME; ?> - Home</title>
 </head>
-<body bgcolor="#fffff0">
-	<div style="width:600px; margin:0 auto;" bgcolor="#ffffff">
+<body bgcolor="#B0C4DE">
+	<div style="width:700px; margin:0 auto; padding:15px; background-color:#B0C4D6;">
 		<br/>
 		<h2>Welcome to <?php echo SITE_NAME; ?></h2>
 		

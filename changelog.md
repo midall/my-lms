@@ -1,6 +1,16 @@
 # Change Log
 
 -----------------------------------------------------------------------------------------
+Version 3 - May 13th, 2017
+-----------------------------------------------------------------------------------------
+
+- remove jquery (not used at this moment)
+- move scorm course number and user id to objects
+- administration page
+- add clear data function on administrator page
+- add classes and administrator on documentation
+
+-----------------------------------------------------------------------------------------
 Version 2.1 - May 7th, 2017
 -----------------------------------------------------------------------------------------
 

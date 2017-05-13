@@ -38,7 +38,7 @@ table
 {
 	border-collapse: collapse;
 	table-layout: fixed;
-	width:600px;
+	width:700px;
     table-layout: fixed;
 }
 
@@ -54,9 +54,9 @@ th
 }
 </style>
 </head>
-<body bgcolor="#fffff0">
-	<p>Go to <a href=".." >home</a></p>
-	<div style="width:600px; margin:0 auto;" bgcolor="#ffffff">
+<body bgcolor="#B0C4DE">
+	<div style="width:700px; margin:0 auto; padding:15px; background-color:#B0C4D6;">
+		<p>Go to <a href=".." >home</a></p>
 		<form action="administration.php" method="GET">
 			<h3>Please select action:</h3>
 			<select name="course_number">
