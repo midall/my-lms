@@ -351,6 +351,19 @@ require '../constants.php';
 									<h4>api.php</h4>
 									<p>The API file includes the 8 functions (described in section <a href="#line3_2">SCO API methods</a>).
 										For permanent storage of values of SCORM variables (described in section <a href="#line3_3">SCO API variables</a>)</p>
+									
+									<h4>Classes</h4>
+									<p>Folder "classes" has the 3 main structure for managing the application:</p>
+									<ol>
+										<li>Db, class to handle database request (superclass)</li>
+										<li>Admin, class to handle request from administrator page</li>
+										<li>Api, class to handle API request while running the application</li>
+									</ol>
+									
+									<h4>Administrator</h4>
+									<p>For managing the scorm data that the SCORM produce and stored in database there is a administrator page is in place that shows the data and gives 
+										the functionality to delete them per course.</p>
+									
 								</div>
 								<!-- end col -->
 							</div>
