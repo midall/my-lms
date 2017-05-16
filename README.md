@@ -13,7 +13,7 @@ The languages that used are:
 - HTML - CSS
 
 
-## Instalation
+## Installation
 - Copy the files to root folder of your server (e.g. htdocs, www )
 - Run the database/stracture.sql commands in MySQL Server
 ```sql
