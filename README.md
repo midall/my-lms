@@ -37,6 +37,6 @@ CREATE TABLE `scorm_data` (
 - Proper documented [my-lms/documentation](https://github.com/midall/my-lms/tree/master/documentation)
 - Documentation template from: [Documentation HTML Template](https://github.com/surjithctly/documentation-html-template)
 
-# About me
+## About me
 - :link: Website: [ntallas.eu](https://ntallas.eu)
 - :link: GitHub: [midall](https://github.com/midall)
