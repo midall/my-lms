@@ -1,6 +1,6 @@
 # MyLMS project
 
-# Description
+## Description
 This repository is my first attempt to create, step-by-step, a basic LMS framework. My primary guidance is from [Vsscorm.net](http://www.vsscorm.net/)
 
 Read full documentation and steps in [Vsscorm.net](http://www.vsscorm.net/)
